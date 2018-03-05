@@ -8,6 +8,8 @@
 #define TxD 7
 
 // SDA = A4, SCL = A5
+// IMU Acceleration: X(+front/-back) & Z(+left/-right)
+// IMU Gyroscope: Y(+CW/-CCW Yaw)
 
 SoftwareSerial blueToothSerial(RxD, TxD);
 // Define 16bit integers
@@ -27,9 +29,9 @@ int aAccuracy = 2; // +- 2g
 int mAccuracy = 6; // 0.6mGauss
 
 // Define Calibration Offsets
-const int aOffSet_x = 0;
-const int aOffSet_y = 1;
-const float aOffSet_z = 0.15;
+const float aOffSet_x = -0.02;
+const float aOffSet_y = 1.0;
+const float aOffSet_z = -0.1;
 
 const int gOffSet;
 
@@ -72,20 +74,21 @@ void loop() {
     // Not sure how to handle the data coming from the bluetooth serial to the arduino.
     // Currently reads char by char and produces output such that it spells out t e s t to give test
     // rather than output one string as 'test'
-    ******************************//
-    if (blueToothSerial.available()) { //check if there's any data sent from the remote bluetooth shield
+    //*****************************
+    
+    while (blueToothSerial.available()) { //check if there's any data sent from the remote bluetooth shield
       recvChar = blueToothSerial.read();
       Serial.print(recvChar);
     }
     // ard to bt
-    // if (Serial.available()) { //check if there's any data sent from the local serial terminal, you can add the other applications here
+     if (Serial.available()) { //check if there's any data sent from the local serial terminal, you can add the other applications here
     //recvChar  = Serial.read();
-    getData();
-    transmitData();
+      getData();
+      transmitData();
     //blueToothSerial.print(recvChar);
 
-    // }
-    delay(1000);
+     }
+    delay(175);
   }
 
 }

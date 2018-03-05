@@ -21,11 +21,11 @@ void transmitData() {
   toBlue += timer;
   toBlue += ",";
 
-  toBlue += f_accelCount[0];
+  toBlue += f_accelCount[0] + aOffSet_x;
   toBlue += ",";
   toBlue += f_accelCount[1] + aOffSet_y;
   toBlue += ",";
-  toBlue += f_accelCount[2] - aOffSet_z;
+  toBlue += f_accelCount[2] + aOffSet_z;
   toBlue += ",";
   toBlue += f_gyroCount[0];
   toBlue += ",";
