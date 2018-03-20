@@ -1,21 +1,8 @@
 clear all;
-%as=instrhwinfo('Bluetooth');
-%a=Bluetooth('CrowBTSlave', 0)
-% fopen(a)
-% data = fread(a,35)
-% fclose(a)
-
+clc;
 ard = Bluetooth('CrowBTSlave',1);
 fopen(ard);
-
-% for i=1:10
-% StringFromSerial = fscanf(ard,'%s');
-% tele = strsplit(StringFromSerial, ',');
-% pk = str2num(tele{1});
-% fprintf('Packet #: %d\n',pk);
-% fprintf('%s\n',StringFromSerial);
-% end
-% fclose(ard);
+fwrite(ard,'G');
 
 for i=1:10
     tic
@@ -30,5 +17,6 @@ for i=1:10
     end
     toc
 end
+%fprintf(ard,'S');
 fclose(ard);
 %fprintf(name)

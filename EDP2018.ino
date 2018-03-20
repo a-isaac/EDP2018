@@ -41,6 +41,17 @@ int packet = 0;
 // Define time;
 unsigned long timer = millis();
 
+// Initialize serial port data
+char blueToothData;
+char serialData;
+
+// Define Motor Pins
+int enA = 5;
+int enB = 9;
+int enC = 10;
+int enD = 11;
+int count = 0;
+
 MPU9255 mpu(12, gAccuracy, aAccuracy, mAccuracy); // Create MPU9255 Sensor object
 
 void setup() {
@@ -51,6 +62,11 @@ void setup() {
   Serial.begin(9600);
   pinMode(RxD, INPUT);
   pinMode(TxD, OUTPUT);
+
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(enC, OUTPUT);
+  pinMode(enD, OUTPUT);
 
   // Setup BT Connection
   setupBlueToothConnection();
@@ -66,8 +82,6 @@ void setup() {
 
 void loop() {
 
-  char recvChar;
-  while (1) {
     // bt to ard
 
     // ***************************
@@ -77,19 +91,27 @@ void loop() {
     //*****************************
     
     while (blueToothSerial.available()) { //check if there's any data sent from the remote bluetooth shield
-      recvChar = blueToothSerial.read();
-      Serial.print(recvChar);
+      blueToothData = blueToothSerial.read();
+      Serial.println(blueToothData);
     }
     // ard to bt
-     if (Serial.available()) { //check if there's any data sent from the local serial terminal, you can add the other applications here
-    //recvChar  = Serial.read();
-      getData();
-      transmitData();
-    //blueToothSerial.print(recvChar);
-
+     if (Serial.available()){ //check if there's any data sent from the local serial terminal, you can add the other applications here
      }
-    delay(175);
-  }
+
+    // Below statements work
+     if (blueToothData == 'G') {
+        getData();
+        transmitData();
+        count++;
+        if (count>256){
+          count = 1;
+        }
+        demoTwo(count);
+      } else if (blueToothData == 'S') {
+        blueToothSerial.println("Waiting...");
+        blueToothData = '0';
+    }
+    delay(100);
 
 }
 
