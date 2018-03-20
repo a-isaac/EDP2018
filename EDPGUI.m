@@ -1,3 +1,4 @@
+
 function varargout = EDPGUI(varargin)
 % EDPGUI MATLAB code for EDPGUI.fig
 %      EDPGUI, by itself, creates a new EDPGUI or raises the existing
@@ -22,7 +23,7 @@ function varargout = EDPGUI(varargin)
 
 % Edit the above text to modify the response to help EDPGUI
 
-% Last Modified by GUIDE v2.5 19-Mar-2018 23:57:44
+% Last Modified by GUIDE v2.5 20-Mar-2018 11:49:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -51,14 +52,13 @@ function EDPGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to EDPGUI (see VARARGIN)
-
 % Choose default command line output for EDPGUI
 handles.output = hObject;
-
 % Update handles structure
 guidata(hObject, handles);
 axes(handles.logo);
 imshow('rc.png');
+
 
 % UIWAIT makes EDPGUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -75,9 +75,9 @@ function varargout = EDPGUI_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes when entered data in editable cell(s) in uitable1.
-function uitable1_CellEditCallback(hObject, eventdata, handles)
-% hObject    handle to uitable1 (see GCBO)
+% --- Executes when entered data in editable cell(s) in uitableTele.
+function uitableTele_CellEditCallback(hObject, eventdata, handles)
+% hObject    handle to uitableTele (see GCBO)
 % eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)
 %	Indices: row and column indices of the cell(s) edited
 %	PreviousData: previous data for the cell(s) edited
@@ -96,18 +96,25 @@ function radiobutton1_Callback(hObject, eventdata, handles)
 % Hint: get(hObject,'Value') returns toggle state of radiobutton1
 
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
+% --- Executes on button press in connectButton.
+function connectButton_Callback(hObject, eventdata, handles)
+% hObject    handle to connectButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+global ard;
+display('Attempting to connect...');
+ard = Bluetooth('CrowBTSlave',1);
+connectFunction(ard, handles);
 
 
-% --- Executes on button press in pushbutton2.
-function pushbutton2_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton2 (see GCBO)
+
+% --- Executes on button press in stopButton.
+function stopButton_Callback(hObject, eventdata, handles)
+% hObject    handle to stopButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+global ard;
+stopFunction(ard);
 
 
 
@@ -133,6 +140,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
+
 % --- Executes on button press in radiobutton3.
 function radiobutton3_Callback(hObject, eventdata, handles)
 % hObject    handle to radiobutton3 (see GCBO)
@@ -156,7 +164,6 @@ function popupmenu1_Callback(hObject, eventdata, handles)
 % hObject    handle to popupmenu1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
 % Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from popupmenu1
 
@@ -166,7 +173,6 @@ function popupmenu1_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to popupmenu1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
-
 % Hint: popupmenu controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -179,9 +185,9 @@ function popupmenu2_Callback(hObject, eventdata, handles)
 % hObject    handle to popupmenu2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
 % Hints: contents = cellstr(get(hObject,'String')) returns popupmenu2 contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from popupmenu2
+
 
 
 % --- Executes during object creation, after setting all properties.
@@ -195,3 +201,10 @@ function popupmenu2_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --------------------------------------------------------------------
+function uipanel3_ButtonDownFcn(hObject, eventdata, handles)
+% hObject    handle to uipanel3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
