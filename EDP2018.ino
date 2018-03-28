@@ -89,6 +89,7 @@ void loop() {
     // Currently reads char by char and produces output such that it spells out t e s t to give test
     // rather than output one string as 'test'
     //*****************************
+ 
     
     while (blueToothSerial.available()) { //check if there's any data sent from the remote bluetooth shield
       blueToothData = blueToothSerial.read();
@@ -98,18 +99,20 @@ void loop() {
      if (Serial.available()){ //check if there's any data sent from the local serial terminal, you can add the other applications here
      }
 
-    // Below statements work
      if (blueToothData == 'G') {
         getData();
         transmitData();
-        count++;
-        if (count>256){
-          count = 1;
-        }
-        demoTwo(count);
+        //demoTwo();
+        straightPath();
+      } else if (blueToothData == 'C'){
+        getData();
+        transmitData();
+        circlePath();
       } else if (blueToothData == 'S') {
         blueToothSerial.println("Waiting...");
         blueToothData = '0';
+        packet = 0;
+        stopMotors();
     }
     delay(100);
 

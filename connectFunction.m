@@ -6,28 +6,16 @@ function [ard] = connectFunction(ard, handles)
     %   3. Outputs csvfile log name for reference
     %   4. Also outputs timer object for reference
 
-    GlobalDeclarations;
+    %GlobalDeclarations;
     display('Connecting...');
-    cla(handles.Graph1);
-
+    cla(handles.Graph1, 'reset');
     try
         fopen(ard);
-        fwrite(ard, 'G');
-        error = false;
+        display('Connection Successful!');
+
     catch 
-        error = true;
+        display('Failed to Open');
     end
-    
-    if (error == false)
-        fwrite(ard, 'G');
-        %msgbox('Connection was successful!');
-        delete(timerfindall);
-        csvfile = 1;
-        csvfilename = '';
-        table_filename = '';
-        timeLog = timer('TimerFcn',{@LTimer, ard, csvfile, csvfilename, handles,table_filename},... 
-                                'ExecutionMode','fixedRate','Period', 0.15); 
-        start(timeLog);
-    end
+
 end
 

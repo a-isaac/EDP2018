@@ -3,8 +3,16 @@ function [] = updateGUI_teleTable(handles,dataMatrix,pk)
 %   Detailed explanation goes here
 
 %data = num2cell(dataMatrix(1:pk,1:8));
-data = dataMatrix(1:pk,1:8);
-set(handles.uitableTele, 'Data', data);
+
+
+accelX = dataMatrix(end,3);
+accelY = dataMatrix(end,4);
+gyroY = dataMatrix(end,7);
+
+set(handles.xAccel, 'String',num2str(accelX));
+set(handles.yAccel, 'String',num2str(accelY));
+set(handles.yGyro, 'String',num2str(gyroY));
+
 drawnow;
 end
 

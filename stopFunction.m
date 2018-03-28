@@ -1,5 +1,9 @@
 function [] = stopFunction(ard)
-    display('Stop Button Clicked');
+    display('Disconnect Button Clicked...');
+    global matrix;
+    matrix.dummy(1,8) = 0;
+    matrix.data = matrix.dummy; 
+
     fwrite(ard,'S');
     if (numel(timerfindall) ~= 0)
         stop(timerfindall); % Stop all timers
@@ -11,5 +15,6 @@ function [] = stopFunction(ard)
         instrreset; % And reset
     end
     fclose('all');
+    display('Disconnect Successful!');
 end
 
