@@ -105,7 +105,7 @@ function connectButton_Callback(hObject, eventdata, handles)
 
 global ard;
 display('Attempting to connect...');
-ard = Bluetooth('CrowBTSlave',1);
+ard = Bluetooth('AutoV',1);
 connectFunction(ard, handles);
 
 

@@ -5,9 +5,14 @@ function [] = LTimer(src, evt, ard, csvfile, csvfilename, handles,table_filename
         StringFromSerial = fscanf(ard, '%s');
         %display(StringFromSerial);
         tele = strsplit(StringFromSerial, ',');
-        %pk = str2num(tele{1});
+        %testpk = str2num(tele{1});
+        display('table call')
         tableHandling(StringFromSerial, handles);
-        Update_GUIgraph(handles)
+        global testpk
+        testpk = testpk+1;
+        testpk
+        model(testpk);
+        Update_GUIgraph(handles);
         %fwrite(ard,150);
         toc
     end

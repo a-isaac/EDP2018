@@ -32,8 +32,6 @@ void transmitData() {
   toBlue += f_gyroCount[1];
   toBlue += ",";
   toBlue += f_gyroCount[2];
-
-
   
   blueToothSerial.println(toBlue);
 }

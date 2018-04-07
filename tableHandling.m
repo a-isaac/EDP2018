@@ -11,11 +11,14 @@ function [] = tableHandling(packet, handles)
     7 - Gyro Y
     8 - Gyro Z
     %}
-    tele = strsplit(packet, ',');
+    tele = strsplit(packet, ',')
     global matrix;
     pk = str2num(tele{1});
-    
-
+    %pk = matrix.data(end,1);
+    global ard;
+    ard.BytesAvailable
+%     if (tele == '')
+%         display('Default data')
     if pk == 0
         pk = matrix.data(end,1);
         for i = 2:8
@@ -31,7 +34,7 @@ function [] = tableHandling(packet, handles)
            
         end
         updateGUI_teleTable(handles, matrix.data, pk);
-    end
+     end
 
 end
 

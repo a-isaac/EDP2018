@@ -7,22 +7,33 @@ void straightPath() {
   analogWrite(enB, 100);
   //delay(20);
   //Front Left
-  analogWrite(enC, 100);
+  analogWrite(enC, 200);
   //Rear left
   analogWrite(enD, 100);
 }
 
 void circlePath() {
-  analogWrite(enA,150);
+  
+  analogWrite(enA,100);
   //Wheel  Rear Right 
-  analogWrite(enB, 150);
+  analogWrite(enB, 100);
   //delay(20);
   //Front Left
-  analogWrite(enC, 65);
+  analogWrite(enC, 0);
   //Rear left
   analogWrite(enD, 65);
 }
 
+void MotorControl(int FL, int FR,int RL,int RR) {
+  // Front Left
+  analogWrite(enA,FL);
+  // Front Right
+  analogWrite(enB,FR);
+  // Rear Left
+  analogWrite(enC,RL);
+  //Rear Right
+  analogWrite(enD,RR);
+}
 
 void demoTwo()
 {

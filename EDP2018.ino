@@ -41,16 +41,22 @@ int packet = 0;
 // Define time;
 unsigned long timer = millis();
 
-// Initialize serial port data
-char blueToothData;
-char serialData;
-
 // Define Motor Pins
 int enA = 5;
 int enB = 9;
 int enC = 10;
 int enD = 11;
-int count = 0;
+
+// Initialize Incoming Serial Commands
+int FL, FR, RL, RR;
+const byte numChars = 32;
+char receivedChars[numChars];
+char tempChars[numChars];        // temporary array for use when parsing
+
+// variables to hold the parsed data
+char messageFromPC[numChars] = {0};
+
+boolean newData = false;
 
 MPU9255 mpu(12, gAccuracy, aAccuracy, mAccuracy); // Create MPU9255 Sensor object
 
@@ -81,41 +87,22 @@ void setup() {
 }
 
 void loop() {
-
-    // bt to ard
-
-    // ***************************
-    // Not sure how to handle the data coming from the bluetooth serial to the arduino.
-    // Currently reads char by char and produces output such that it spells out t e s t to give test
-    // rather than output one string as 'test'
-    //*****************************
- 
+  //** PLEASE SEND INCOMING DATA AS <a,b,c,d>
+  //** IT NEEDS TO HAVE THE START MARKER '<' AND END MARKER '>'
+  //** OR IT WONT BE READ AT ALL
+  
+  recvWithStartEndMarkers();
+  if (newData == true) {
+    strcpy(tempChars, receivedChars); // Used for protection of data
+    parseData(); // Motor Control is done here
+    showParsedData(); 
+    newData = false;
     
-    while (blueToothSerial.available()) { //check if there's any data sent from the remote bluetooth shield
-      blueToothData = blueToothSerial.read();
-      Serial.println(blueToothData);
-    }
-    // ard to bt
-     if (Serial.available()){ //check if there's any data sent from the local serial terminal, you can add the other applications here
-     }
-
-     if (blueToothData == 'G') {
-        getData();
-        transmitData();
-        //demoTwo();
-        straightPath();
-      } else if (blueToothData == 'C'){
-        getData();
-        transmitData();
-        circlePath();
-      } else if (blueToothData == 'S') {
-        blueToothSerial.println("Waiting...");
-        blueToothData = '0';
-        packet = 0;
-        stopMotors();
-    }
-    delay(100);
-
+  } else {
+      getData(); 
+      transmitData();      
+  }
+  delay(150);
 }
 
 

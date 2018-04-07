@@ -6,7 +6,8 @@ function [ard] = connectFunction(ard, handles)
     %   3. Outputs csvfile log name for reference
     %   4. Also outputs timer object for reference
 
-    %GlobalDeclarations;
+    GlobalDeclarations;
+    initialization();
     display('Connecting...');
     cla(handles.Graph1, 'reset');
     try

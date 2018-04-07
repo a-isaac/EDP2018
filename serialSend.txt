@@ -1,0 +1,25 @@
+  int blueToothLength;
+  String blueToothData;
+  int incomingSerialDataIndex = 0; // Stores the next 'empty space' in the array
+  char incomingSerialData[15];
+  while(blueToothSerial.available()) {
+    incomingSerialData[incomingSerialDataIndex] = blueToothSerial.read();
+    incomingSerialDataIndex++; // Ensure the next byte is added in the next position
+    incomingSerialData[incomingSerialDataIndex] = '\0';
+  }
+ // if (Serial.available()){ //check if there's any data sent from the local serial terminal, you can add the other applications here
+ // }
+  
+  blueToothData = String(incomingSerialData); // Cast Char to Str
+  //Serial.println(blueToothData);
+  blueToothLength = blueToothData.length(); // Remove Null
+  if (blueToothLength == 1) {
+    if (incomingSerialData[0] == 'S') {
+      blueToothData = '0';
+      //Serial.println("Stopped");
+      stopMotors();
+    } 
+  }
+  
+  <255,255,255,255>
+  <55,155,100,225>
