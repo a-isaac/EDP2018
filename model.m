@@ -126,7 +126,7 @@ X_Est(testpk,:) = [0 0 0];
 %     U_MPC
      [X_MPC,U_MPC] = Controller(X_Est(testpk,:)',Ref',X_MPC,U_MPC);
     WL(testpk) = U_MPC(1,1)*9.5493;
-    WR(testpk) = U_MPC(1,2)*9.5493;
+    WR(testpk) = U_MPC(2,1)*9.5493;
 %       WL(testpk) = 100;
 %      WR(testpk) = 100;
     

@@ -1,5 +1,6 @@
 function [ output_args ] = endFunction( ard, handles )
     fwrite(ard,'<0,0,0,0>');
+    %fwrite(ard,'s');
     global testpk;
     testpk = 1;
     display('Stop Button Clicked');

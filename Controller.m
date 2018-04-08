@@ -24,9 +24,9 @@ if exist('U','var')
 else
     U=zeros(2,TH);
 end
-
+X0=X(:,1);
 if exist('X','var')
-    X(:,1)=X0(:);
+    %X(:,1)=X0(:);
     X(:,TH)=X(:,TH-1)+[rand rand rand]';
 else
     X=zeros(3,TH);
@@ -37,9 +37,9 @@ r       = 0.064;
 c       = ((15.46-10.89)/2+10.89)*10^-2;
 
 %%% Bounds on States
-xL    = -20;               xU = 20;
-yL    = -20;               yU = 20;
-TL    = -pi;               TU = pi;
+xL    = -200;               xU = 200;
+yL    = -200;               yU = 200;
+TL    = -5*pi;               TU = 5*pi;
 
 %%% Bounds on Controls
 OM_L_L= 0;      OM_L_U= 18;
@@ -108,7 +108,6 @@ for J=2:TH-1
 end
       
 % Set the solver options for NMPC
-options =  optimoptions('quadprog','Display','none');
 
 Hes=cell(1,(TH-1));
 Gra=cell(1,(TH-1));
@@ -117,7 +116,7 @@ col=1;
 %% Iteration starts
 
 for i=1:TH-1
-    f=@(x) ((x(1)-Xref(col))^2 + (x(2)-Yref(col))^2);
+    f=@(x) (0.5*(x(1)-Xref(col))^2 + 0.5*(x(2)-Yref(col))^2);
     col=col+1;
     [H,gr,z1t]=hessiancsd(f,X(:,i));
     Hes{i}=H;
@@ -131,7 +130,7 @@ for J=2:TH-1
 end
 
 for i=1:TH-1
-    f=@(x) ((x(1)-12)^2 + (x(2)-12)^2);  %% venki look here for minimum speed line 133
+    f=@(x) (0)^2 + (0)^2;  %% venki look here for minimum speed line 133
     [H,gr,z1t]=hessiancsd(f,U(:,i));
     Hess1=blkdiag(Hess1,H);
     Grad1=[Grad1;gr];
@@ -145,7 +144,7 @@ Grad=Grad1;
 Aineq=[];
 bineq=[];
 X0L=[reshape(X(1:3,1:5),1,15) reshape(U(1:2,1:5),1,10)];
-xout = quadprog(Hess,Grad,Aineq,bineq,Aeq,beq,Xmin',Xmax',X0L,options);
+xout = quadprog(Hess,Grad,Aineq,bineq,Aeq,beq,Xmin',Xmax',X0L);
 
 counta=0;
  for i = 1:TH-1
