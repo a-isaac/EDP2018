@@ -7,7 +7,10 @@ b = 0*10^-2;
 a = 0*10^-2;
 l = b - a ;
 T_Tot = 300;
-T = 0.1;
+T = 0.150;
+
+global array1;
+global array2;
 
     %Initializations:
     global W
@@ -53,7 +56,7 @@ testpk = 0;
     P = eye(3);
     G = eye(3);
     %Circle
-    Path = [[cos(0:(2*pi/50):(2*pi*3))]'+5, [sin(0:(2*pi/50):(2*pi*3))]'];
-    %Path =[linspace(1,5,350)' linspace(1,5,350)'];
+%     Path = [[cos(0:(2*pi/50):(2*pi*3))]'+5, [sin(0:(2*pi/50):(2*pi*3))]'];
+    Path =[linspace(0,20,350)' linspace(0,20,350)'];
     Path = Path(1:(end-1),:);
 end 

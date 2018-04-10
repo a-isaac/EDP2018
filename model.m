@@ -32,7 +32,7 @@ b = 0*10^-2;
 a = 0*10^-2;
 l = b - a ;
 T_Tot = 300;
-T = 0.1;
+T = 0.150;
 
 
 global W
@@ -86,7 +86,7 @@ X_Est(testpk,:) = [0 0 0];
     X_dot_S(testpk) = X_dot_S(testpk-1) + T * Acc_X(testpk);
     Y_dot_S(testpk) = Y_dot_S(testpk-1) + T * Acc_Y(testpk);
     
-    Y(testpk,:) = [ Y(testpk-1,1)+T*X_dot_S(testpk)  Y(testpk-1,2)+T*Y_dot_S(testpk)  Y(testpk-1,3)+T*Gyro_Z(testpk)];
+    Y(testpk,:) = [ Y(testpk-1,1)+T*X_dot_S(testpk)  Y(testpk-1,2)+T*Y_dot_S(testpk)  Y(testpk-1,3)+T*Gyro_Z(testpk)]
   
     %% EK Filter  
 
@@ -125,6 +125,7 @@ X_Est(testpk,:) = [0 0 0];
 %     X_MPC
 %     U_MPC
      [X_MPC,U_MPC] = Controller(X_Est(testpk,:)',Ref',X_MPC,U_MPC);
+    
     WL(testpk) = U_MPC(1,1)*9.5493;
     WR(testpk) = U_MPC(2,1)*9.5493;
 %       WL(testpk) = 100;
