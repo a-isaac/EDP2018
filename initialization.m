@@ -57,6 +57,6 @@ testpk = 0;
     G = eye(3);
     %Circle
 %     Path = [[cos(0:(2*pi/50):(2*pi*3))]'+5, [sin(0:(2*pi/50):(2*pi*3))]'];
-    Path =[linspace(0,20,350)' linspace(0,20,350)'];
+    Path =[linspace(0,10,500)' linspace(0,10,500)'];
     Path = Path(1:(end-1),:);
 end 

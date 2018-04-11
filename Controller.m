@@ -41,9 +41,9 @@ r       = 0.064;
 c       = ((15.46-10.89)/2+10.89)*10^-2;
 
 %%% Bounds on States
-xL    = -200;               xU = 200;
-yL    = -200;               yU = 200;
-TL    = -2*pi;               TU = 2*pi;
+xL    = 0;               xU = 10;
+yL    = 0;               yU = 10;
+TL    = -pi;               TU = pi;
 
 %%% Bounds on Controls
 OM_L_L= 12;      OM_L_U= 18;
@@ -120,7 +120,7 @@ col=1;
 %% Iteration starts
 
 for i=1:TH-1
-    f=@(x) (-x(1)^2);
+    f=@(x) ((x(1)-x(2))^2);
     col=col+1;
     [H,gr,z1t]=hessiancsd(f,X(:,i));
     Hes{i}=H;
@@ -134,7 +134,7 @@ for J=2:TH-1
 end
 
 for i=1:TH-1
-    f=@(x) (0)^2;  %% venki look here for minimum speed line 133
+    f=@(x) (-0.05*x(1)-0.05*(x(2)));  %% venki look here for minimum speed line 133
     [H,gr,z1t]=hessiancsd(f,U(:,i));
     Hess1=blkdiag(Hess1,H);
     Grad1=[Grad1;gr];
